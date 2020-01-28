@@ -1,15 +1,21 @@
 pipeline{
-    agent none
+    agent any
     stages{
-        stage(CreateAndDeploy){
-            agent{
-                docker{
-                    image 'maven:latest'
-                    args '--network=documentation_sonarnet'
-                }
-            }
+        stage(Bedingt){
+            when { changeset "**.txt" }
             steps{
-		sh 'ls'
+                echo "first"
+            }
+        }
+        stage(Bedingt2){
+            when{ changeset pattern: "**.txt"}
+            steps{
+                echo "second"
+            }
+        }
+        stage(NichtBedingt){
+            steps{
+                echo "Hello"
             }
         }
     }
